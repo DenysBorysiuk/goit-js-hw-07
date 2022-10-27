@@ -6,24 +6,25 @@ const galleryMarkup = createMarkup(galleryItems);
 let instance;
 
 galleryRefs.insertAdjacentHTML('beforeend', galleryMarkup);
-galleryRefs.addEventListener('click', onClick);
+galleryRefs.addEventListener('click', onModalOpen);
 
 function createMarkup(galleryMarkup) {
   return galleryItems
-    .map(({ preview, original, description }) => {
-      return `<a class="gallery__link" href="${original}">
+    .map(
+      ({ preview, original, description }) =>
+        `<a class="gallery__link" href="${original}">
     <img
       class="gallery__image"
       src="${preview}"
       data-source="${original}"
       alt="${description}"
     />
-  </a>`;
-    })
+  </a>`
+    )
     .join('');
 }
 
-function onClick(evt) {
+function onModalOpen(evt) {
   evt.preventDefault();
 
   if (evt.target.nodeName !== 'IMG') {
@@ -36,10 +37,10 @@ function onClick(evt) {
 
   instance.show();
 
-  window.addEventListener('keydown', onPressEsc);
+  window.addEventListener('keydown', onModalclose);
 }
 
-function onPressEsc(evt) {
+function onModalclose(evt) {
   if (evt.code === 'Escape') {
     instance.close();
     window.removeEventListener('keydown', onPressEsc);
