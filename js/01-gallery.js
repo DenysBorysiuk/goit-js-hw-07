@@ -3,6 +3,7 @@ import { galleryItems } from './gallery-items.js';
 
 const galleryRefs = document.querySelector('.gallery');
 const galleryMarkup = createMarkup(galleryItems);
+let instance;
 
 galleryRefs.insertAdjacentHTML('beforeend', galleryMarkup);
 galleryRefs.addEventListener('click', onClick);
@@ -24,15 +25,23 @@ function createMarkup(galleryMarkup) {
 
 function onClick(evt) {
   evt.preventDefault();
+
   if (evt.target.nodeName !== 'IMG') {
     return;
   }
 
-  const instance = basicLightbox.create(`
-      <img src="${evt.target.dataset.source}" width="1280">
-  `);
+  instance = basicLightbox.create(`
+        <img src="${evt.target.dataset.source}" width="1280">
+    `);
 
   instance.show();
+
+  window.addEventListener('keydown', onPressEsc);
 }
 
-// console.log(galleryItems);
+function onPressEsc(evt) {
+  if (evt.code === 'Escape') {
+    instance.close();
+    window.removeEventListener('keydown', onPressEsc);
+  }
+}
