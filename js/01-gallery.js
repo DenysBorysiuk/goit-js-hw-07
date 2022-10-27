@@ -8,8 +8,8 @@ let instance;
 galleryRefs.insertAdjacentHTML('beforeend', galleryMarkup);
 galleryRefs.addEventListener('click', onModalOpen);
 
-function createMarkup(galleryMarkup) {
-  return galleryItems
+function createMarkup(gallery) {
+  return gallery
     .map(
       ({ preview, original, description }) =>
         `<a class="gallery__link" href="${original}">
