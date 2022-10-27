@@ -1,5 +1,6 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
+
 const galleryRefs = document.querySelector('.gallery');
 const galleryMarkup = createMarkup(galleryItems);
 
@@ -23,6 +24,15 @@ function createMarkup(galleryMarkup) {
 
 function onClick(evt) {
   evt.preventDefault();
-  console.dir(evt.target.dataset.source);
+  if (evt.target.nodeName !== 'IMG') {
+    return;
+  }
+
+  const instance = basicLightbox.create(`
+      <img src="${evt.target.dataset.source}" width="1280">
+  `);
+
+  instance.show();
 }
+
 // console.log(galleryItems);
